@@ -1,19 +1,11 @@
-import { Construct } from "constructs";
-import { App, TerraformStack, CloudBackend, NamedCloudWorkspace } from "cdktf";
-
-class MyStack extends TerraformStack {
-  constructor(scope: Construct, id: string) {
-    super(scope, id);
-
-    // define resources here
-  }
-}
+import { App, CloudBackend, NamedCloudWorkspace } from 'cdktf';
+import { BackupStack } from './lib/s3/backup-stack';
 
 const app = new App();
-const stack = new MyStack(app, "synology-backup");
+const stack = new BackupStack(app, 'backup');
 new CloudBackend(stack, {
-  hostname: "app.terraform.io",
-  organization: "kawakawaryuryu",
-  workspaces: new NamedCloudWorkspace("synology-backup")
+  hostname: 'app.terraform.io',
+  organization: 'kawakawaryuryu',
+  workspaces: new NamedCloudWorkspace('synology-backup')
 });
 app.synth();
